@@ -36,7 +36,7 @@ const createFighterValid = (req, res, next) => {
         next();
     }
     else {
-        res.status(404).json(generateError('not enough properties to create fighter'))
+        res.status(400).json(generateError('not enough properties to create fighter'))
     }
 }
 
