@@ -29,7 +29,8 @@ const createUserValid = (req, res, next) => {
         req.body.lastName &&
         req.body.email && 
         req.body.phoneNumber && 
-        req.body.password && req.body.password.length > 2)
+        req.body.password
+        )
     {
         const data = users.getAll();
         if (!validateGmail(req.body.email)) {
@@ -48,10 +49,18 @@ const createUserValid = (req, res, next) => {
             res.status(400).json(generateError('telephone number is already exist'));
             return null;
         }
+        if (req.body.password.length < 3) {
+            res.status(404).json(generateError('short password'))
+            return null;
+        }
+        if (typeof req.body.password !== 'string') {
+            res.status(404).json(generateError('password must be string'))
+            return null;
+        }
         next();
     }
     else {
-        res.status(404).json(generateError('not enough properties or short password'))
+        res.status(404).json(generateError('not enough properties to create user'))
     }
 }
 
@@ -78,6 +87,10 @@ const updateUserValid = (req, res, next) => {
         res.status(404).json(generateError('short password'))
         return null;
     }
+    if (req.body.password && typeof req.body.password !== 'string') {
+        res.status(404).json(generateError('password must be string'))
+        return null;
+    }
     next();
 }
 
@@ -89,7 +102,6 @@ const propertyValid = (req, res, next) => {
     else {
         res.status(404).json(generateError('There is no such property'))
     };
-    
 }
 
 exports.createUserValid = createUserValid;
