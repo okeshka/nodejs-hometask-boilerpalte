@@ -84,11 +84,11 @@ const updateUserValid = (req, res, next) => {
         return null;
     }
     if (req.body.password && req.body.password.length < 3) {
-        res.status(404).json(generateError('short password'))
+        res.status(400).json(generateError('short password'))
         return null;
     }
     if (req.body.password && typeof req.body.password !== 'string') {
-        res.status(404).json(generateError('password must be string'))
+        res.status(400).json(generateError('password must be string'))
         return null;
     }
     next();
@@ -100,7 +100,7 @@ const propertyValid = (req, res, next) => {
         next()
     }
     else {
-        res.status(404).json(generateError('There is no such property'))
+        res.status(400).json(generateError('There is no such property'))
     };
 }
 

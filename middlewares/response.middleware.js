@@ -8,7 +8,7 @@ const responseMiddleware = (req, res, next) => {
         next();
     }
    else {
-       res.status(404).json({error: true, message: "no body in response or empty response body"})
+       res.status(400).json({error: true, message: "no body in response or empty response body"})
    }
 }
 

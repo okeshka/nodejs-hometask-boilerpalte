@@ -68,7 +68,7 @@ const propertyValid = (req, res, next) => {
         next()
     }
     else {
-        res.status(404).json(generateError('There is no such property'))
+        res.status(400).json(generateError('There is no such property'))
     };
 }
 exports.createFighterValid = createFighterValid;
