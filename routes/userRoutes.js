@@ -17,7 +17,6 @@ router.get('/:id', function(req, res, next) {
 })
 
 router.post('', responseMiddleware, createUserValid, propertyValid, function(req, res, next) {
-    if ("id" in req.body) res.status(400).json({error: true, message: "id detected"})
     const user = UserService.addUser(req.body);
     res.status(200).send(user);
 })

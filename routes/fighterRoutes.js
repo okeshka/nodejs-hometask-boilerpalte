@@ -17,20 +17,19 @@ router.get("/:id", function(req, res, next) {
     res.status(200).json(fighter);
 })
 
-router.post("", responseMiddleware, propertyValid, function(req, res, next) {
-    if ("id" in req.body) res.status(400).json({error: true, message: "id detected"})
+router.post("", responseMiddleware, propertyValid, createFighterValid, function(req, res, next) {
     const fighter = FighterService.addFighter(req.body);
-    res.status(200).send(fighter);
+    res.status(200).json(fighter);
 })
 
-router.put('/:id', responseMiddleware, propertyValid, function(req, res, next) {
+router.put('/:id', responseMiddleware, propertyValid, updateFighterValid, function(req, res, next) {
     const fighter = FighterService.update(req.params.id, req.body);
-    res.status(200).send(fighter);
+    res.status(200).json(fighter);
 })
 
 router.delete('/:id', function(req, res, next) {
     const fighter = FighterService.delete(req.params.id);
-    res.status(200).send(fighter);
+    res.status(200).json(fighter);
 })
 
 module.exports = router;

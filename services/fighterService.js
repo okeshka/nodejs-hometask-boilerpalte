@@ -9,8 +9,8 @@ class FighterService {
         }
         return fighters; 
     }
-    search(id) {
-        const fighter = FighterRepository.search(id);
+    getOne(id) {
+        const fighter = FighterRepository.getOne(id);
         if (!fighter) {
             return null
         }

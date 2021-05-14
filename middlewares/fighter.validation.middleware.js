@@ -1,20 +1,21 @@
 const { fighter } = require('../models/fighter');
+const fighters = require('../services/fighterService');
 
 const generateError = (message) => {
     return {error: true, message}
 }
 
 const checkName = (name, fighters) => {
-    return users.map((fighter) => fighter.name).includes(name);
+    return fighters.map((fighter) => fighter.name).includes(name);
 }
 const createFighterValid = (req, res, next) => {
     // TODO: Implement validatior for fighter entity during creation
     if (req.body.power &&
-        req.body.defence &&
+        req.body.defense &&
         req.body.name)
     {   
         const data = fighters.getAll();
-        if (isNaN(req.body.power) || req.body.power <= 1 || req.body.power >= 100) {
+        if (typeof req.body.power !== 'number' || req.body.power <= 1 || req.body.power >= 100) {
             res.status(400).json(generateError('not valid power of fighter'));
             return null;
         }
@@ -22,7 +23,7 @@ const createFighterValid = (req, res, next) => {
             res.status(400).json(generateError('This name is already exist'));
             return null;
         }
-        if (isNaN(req.body.defence) || req.body.defence <= 1 || req.body.defence >= 10) {
+        if (req.body.defense !== 'number' || req.body.defense <= 1 || req.body.defense >= 10) {
             res.status(400).json(generateError('not valid defence of fighter'));
             return null;
         }
@@ -31,6 +32,7 @@ const createFighterValid = (req, res, next) => {
             return null;
         }
         if (!req.body.health) req.body.health = 100;
+        
         next();
     }
     else {
@@ -42,7 +44,7 @@ const createFighterValid = (req, res, next) => {
 const updateFighterValid = (req, res, next) => {
     // TODO: Implement validatior for fighter entity during update   
         const data = fighters.getAll();
-        if (req.body.power && (isNaN(req.body.power) || req.body.power <= 1 || req.body.power >= 100)) {
+        if (req.body.power && (typeof req.body.power !== 'number'|| req.body.power <= 1 || req.body.power >= 100)) {
             res.status(400).json(generateError('not valid power of fighter'));
             return null;
         }
@@ -50,7 +52,7 @@ const updateFighterValid = (req, res, next) => {
             res.status(400).json(generateError('This name is already exist'));
             return null;
         }
-        if (req.body.defence && (isNaN(req.body.defence) || req.body.defence <= 1 || req.body.defence >= 10)) {
+        if (req.body.defense && (req.body.defense !== 'number' || req.body.defense <= 1 || req.body.defense >= 10)) {
             res.status(400).json(generateError('not valid defence of fighter'));
             return null;
         }
