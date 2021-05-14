@@ -14,7 +14,8 @@ router.get("", function(req, res, next) {
 
 router.get("/:id", function(req, res, next) {
     const fighter = FighterService.getOne(req.params.id);
-    res.status(200).json(fighter);
+    if (!fighter) { res.status(400).json('id не найден') }
+    else res.status(200).json(fighter);
 })
 
 router.post("", responseMiddleware, propertyValid, createFighterValid, function(req, res, next) {
@@ -24,12 +25,14 @@ router.post("", responseMiddleware, propertyValid, createFighterValid, function(
 
 router.put('/:id', responseMiddleware, propertyValid, updateFighterValid, function(req, res, next) {
     const fighter = FighterService.update(req.params.id, req.body);
-    res.status(200).json(fighter);
+    if (!fighter) { res.status(400).json('id не найден') }
+    else res.status(200).json(fighter);
 })
 
 router.delete('/:id', function(req, res, next) {
     const fighter = FighterService.delete(req.params.id);
-    res.status(200).json(fighter);
+    if (!fighter) { res.status(400).json('id не найден') }
+    else res.status(200).json(fighter);
 })
 
 module.exports = router;

@@ -13,7 +13,8 @@ router.get('', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
     const user = UserService.search(req.params.id);
-    res.status(200).send(user);
+    if (!user) { res.status(400).json('id не найден') }
+    else res.status(200).send(user);
 })
 
 router.post('', responseMiddleware, createUserValid, propertyValid, function(req, res, next) {
@@ -23,12 +24,14 @@ router.post('', responseMiddleware, createUserValid, propertyValid, function(req
 
 router.put('/:id', responseMiddleware, updateUserValid, propertyValid, function(req, res, next) {
     const user = UserService.update(req.params.id, req.body);
-    res.status(200).send(user);
+    if (!user) {res.status(400).json('id не найден') }
+    else res.status(200).send(user);
 })
 
 router.delete('/:id', function(req, res, next) {
     const user = UserService.delete(req.params.id);
-    res.status(200).send(user);
+    if (!user) {res.status(404).json('id не найден') }
+    else res.status(200).send(user);
 })
 
 
