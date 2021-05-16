@@ -6,38 +6,50 @@ class UserService {
 
     getAll() {
         const users = UserRepository.getAll();
-        if (!users) {
-            return null;
+        if (users) {
+            return users;
         }
-        return users; 
+        return null; 
     }
-    search(id) {
-        const item = UserRepository.getOne(id);
-        if(!item) {
-            return null;
-        }
-        return item;
+    getOne(id) {
+        if (id) {
+            const user = UserRepository.getOne(id);
+            if(user) {
+                return user;
+            }
+        }   
+        return null;
     }
     addUser(user) {
         if (user) {
-            return UserRepository.create(user)
+            //if (this.unvalidateProperty(user)) return {error: true, message: "email or telephone is exist. Please try again"}
+            const newUser = UserRepository.create(user);
+            if (newUser) return newUser;
         }
-        else {
-            return null
-        }
+        return null;
     }
     update(id, data) {
         if (id && data) {
-            return UserRepository.update(id, data)
+            const updateUser = UserRepository.update(id, data);
+            if (updateUser) return updateUser;
         }
-        else return null
+        return null
     }
     delete(id) {
         if (id) {
-            return UserRepository.delete(id)
+            const user = UserRepository.delete(id);
+            if (user) return user; 
         }
-        else return null
+        return null
     }
+    /*
+     unvalidateProperty({email, phoneNumber}) {
+        const users = this.getAll();
+        return users.map((user) => user.email).includes(email) ||  
+        users.map((user) => user.phoneNumber).includes(phoneNumber); 
+     }
+    */
+
 }
 
 module.exports = new UserService();

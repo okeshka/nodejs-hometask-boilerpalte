@@ -4,37 +4,38 @@ class FighterService {
     // TODO: Implement methods to work with fighters
     getAll() {
         const fighters = FighterRepository.getAll();
-        if (!fighters) {
-            return null;
+        if (fighters) {
+            return fighters;
         }
-        return fighters; 
+        return null; 
     }
     getOne(id) {
-        const fighter = FighterRepository.getOne(id);
-        if (!fighter) {
-            return null
+        if (id) {
+            const fighter = FighterRepository.getOne(id);
+            if (fighter) return fighter;
         }
-        return fighter;
+        return null
     }
     addFighter(fighter) {
         if (fighter) {
-            return FighterRepository.create(fighter)
+            const newFighter = FighterRepository.create(fighter);
+            if (newFighter) return newFighter;
         }
-        else {
-            return null
-        }
+        return null
     }
     update(id, data) {
         if (id && data) {
-            return FighterRepository.update(id, data)
+            const fighterUpdate = FighterRepository.update(id, data);
+            if (fighterUpdate) return fighterUpdate;
         }
-        else return null
+        return null
     }
     delete(id) {
         if (id) {
-            return FighterRepository.delete(id)
+            const fighter = FighterRepository.delete(id);
+            if (fighter) return fighterl
         }
-        else return null
+        return null
     }
 }
 

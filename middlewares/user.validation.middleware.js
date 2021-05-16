@@ -32,23 +32,23 @@ const createUserValid = (req, res, next) => {
         req.body.password
         )
     {
-        const data = users.getAll();
+       // const data = users.getAll();
         if (!validateGmail(req.body.email)) {
             res.status(400).json(generateError('not valid email'));
             return null;
         }
-        if (checkGmail(req.body.email, data)) {
-            res.status(400).json(generateError('This email is already exist'));
-            return null;
-        }
+        // if (checkGmail(req.body.email, data)) {
+        //     res.status(400).json(generateError('This email is already exist'));
+        //     return null;
+        // }
         if (!validatePhone(req.body.phoneNumber)) {
             res.status(400).json(generateError('not valid telephone number'));
             return null;
         }
-        if (checkPhone(req.body.phoneNumber, data)) {
-            res.status(400).json(generateError('telephone number is already exist'));
-            return null;
-        }
+        // if (checkPhone(req.body.phoneNumber, data)) {
+        //     res.status(400).json(generateError('telephone number is already exist'));
+        //     return null;
+        // }
         if (req.body.password.length < 3) {
             res.status(404).json(generateError('short password'))
             return null;
@@ -94,16 +94,16 @@ const updateUserValid = (req, res, next) => {
     next();
 }
 
-const propertyValid = (req, res, next) => {
-    const isProperty = Object.keys(req.body).every((key) => key in user)
-    if (isProperty) {
-        next()
-    }
-    else {
-        res.status(400).json(generateError('There is no such property'))
-    };
-}
+// const propertyValid = (req, res, next) => {
+//     const isProperty = Object.keys(req.body).every((key) => key in user)
+//     if (isProperty) {
+//         next()
+//     }
+//     else {
+//         res.status(400).json(generateError('There is no such property'))
+//     };
+// }
 
 exports.createUserValid = createUserValid;
 exports.updateUserValid = updateUserValid;
-exports.propertyValid = propertyValid;
+//exports.propertyValid = propertyValid;

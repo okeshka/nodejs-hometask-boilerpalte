@@ -9,30 +9,42 @@ const router = Router();
 
 router.get("", function(req, res, next) {
     const fighters = FighterService.getAll();
-    res.status(200).json(fighters);
+    if (fighters) {
+        res.status(200).json(fighters);
+    }
+    else res.status(400).json({error: "true", message: "users not found"})
 })
 
 router.get("/:id", function(req, res, next) {
     const fighter = FighterService.getOne(req.params.id);
-    if (!fighter) { res.status(400).json('id не найден') }
-    else res.status(200).json(fighter);
+    if (fighter) { 
+        res.status(200).json(fighter);
+    }
+    else res.status(400).json({error: "true", message: "id not found"})
 })
 
 router.post("", responseMiddleware, propertyValid, createFighterValid, function(req, res, next) {
     const fighter = FighterService.addFighter(req.body);
-    res.status(200).json(fighter);
+    if (fighter) { 
+        res.status(200).json(fighter);
+    }
+    else res.status(400).json({error: "true", message: "couldn't add user"})
 })
 
 router.put('/:id', responseMiddleware, propertyValid, updateFighterValid, function(req, res, next) {
     const fighter = FighterService.update(req.params.id, req.body);
-    if (!fighter) { res.status(400).json('id не найден') }
-    else res.status(200).json(fighter);
+    if (fighter) { 
+        res.status(200).json(fighter);
+    }
+    else res.status(400).json({error: "true", message: "id not found"})
 })
 
 router.delete('/:id', function(req, res, next) {
     const fighter = FighterService.delete(req.params.id);
-    if (!fighter) { res.status(400).json('id не найден') }
-    else res.status(200).json(fighter);
+    if (fighter) { 
+        res.status(200).json(fighter);
+    }
+    else res.status(400).json({error: "true", message: "id not found"})
 })
 
 module.exports = router;
